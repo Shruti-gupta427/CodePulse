@@ -1,0 +1,51 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model User {
+  id           String   @id @default(cuid())
+  email        String   @unique
+  passwordHash String
+  createdAt    DateTime @default(now())
+  reviews      Review[]
+}
+
+model Review {
+  id          String       @id @default(cuid())
+  userId      String
+  user        User         @relation(fields: [userId], references: [id])
+  code        String
+  language    String
+  status      ReviewStatus @default(PENDING)
+  score       Int?
+  summary     String?
+  createdAt   DateTime     @default(now())
+  completedAt DateTime?
+  issues      Issue[]
+
+  @@index([userId, createdAt(sort: Desc)])
+}
+
+model Issue {
+  id          String  @id @default(cuid())
+  reviewId    String
+  review      Review  @relation(fields: [reviewId], references: [id])
+  lineStart   Int
+  lineEnd     Int
+  severity    String
+  category    String
+  description String
+  fix         String
+
+  @@index([reviewId])
+}
+enum ReviewStatus {
+  PENDING
+  PROCESSING
+  COMPLETED
+  FAILED
+}
