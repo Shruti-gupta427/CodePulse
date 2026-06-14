@@ -2,6 +2,8 @@ import { Router } from 'express'
 import { z } from 'zod'
 import { validate } from '../middleware/validate'
 import {authenticate} from '../middleware/autenticate'
+import {rateLimiter} from '../middleware/ratelimiter'
+
 import * as reviewService from '../services/review.service'
 
 const router = Router()
@@ -10,7 +12,7 @@ const reviewSchema = z.object({
   language: z.enum(['javascript', 'typescript', 'python', 'go', 'java', 'cpp'])
 })
 
-router.post('/',authenticate, validate(reviewSchema),async (req,res)=>{
+router.post('/',authenticate, rateLimiter,validate(reviewSchema),async (req,res)=>{
        try {
           const result = await reviewService.createReview(req.user!.id, req.body.code, req.body.language)
           res.status(201).json(result)
