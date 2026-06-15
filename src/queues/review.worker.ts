@@ -1,6 +1,8 @@
 import { Worker } from 'bullmq'
 import { redis } from '../config/redis'
 import { prisma } from '../config/prisma'
+import { runAIPipeline } from '../ai/pipeline'
+import { env } from '../config/env'
 
 export const reviewWorker = new Worker('review-queue', async (job) => {
   const { reviewId } = job.data
@@ -11,19 +13,22 @@ export const reviewWorker = new Worker('review-queue', async (job) => {
     data: { status: 'PROCESSING' }
   })
 
-  // to add ai pipeline
   
-  await new Promise(resolve => setTimeout(resolve, 2000))
+  const result = await runAIPipeline(reviewId)
 
   await prisma.review.update({
     where: { id: reviewId },
     data: { 
       status: 'COMPLETED',
-      completedAt: new Date()
+      score: result.score,
+      summary: result.summary,
+      completedAt: new Date(),
+      issues: { create: result.issues }
+
     }
   })
 
-}, { connection: redis, concurrency: 3 })
+}, { connection: { url: env.REDIS_URL }, concurrency: 3 })
 
 reviewWorker.on('completed', (job) => {
   console.log(`Review ${job.id} completed`)
