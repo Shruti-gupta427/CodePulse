@@ -1,6 +1,6 @@
-import { buildPrompt }   from './promptBuilder'
-import { aiBreaker }     from './openaiGateway'
-import { parseResponse } from './responseParser'
+import { buildPrompt }   from './promptbuilder'
+import { aiBreaker }     from './openaigateway'
+import { parseResponse } from './responseparser'
 import { prisma }        from '../config/prisma'
 export const runAIPipeline = async (reviewId: string) => {
   const review = await prisma.review.findUnique({

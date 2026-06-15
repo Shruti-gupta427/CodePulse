@@ -1,4 +1,4 @@
-interface Issue {
+export interface Issue {
   lineStart:   number
   lineEnd:     number
   severity:    string
@@ -6,7 +6,7 @@ interface Issue {
   description: string
   fix:         string
 }
-interface ReviewResult {
+export interface ReviewResult {
   score:   number
   summary: string
   issues:  Issue[]

@@ -1,4 +1,4 @@
-import { Request, Response, NextFunction } from 'express'
+import type { Request, Response, NextFunction } from 'express'
 import { redis } from '../config/redis'
 
 export const rateLimiter = async (req: Request, res: Response, next: NextFunction) => {
@@ -13,7 +13,7 @@ export const rateLimiter = async (req: Request, res: Response, next: NextFunctio
   pipe.expire(key, 3600)                    
 
   const results = await pipe.exec()
-  const count = results![2][1] as number       // zcard result is at index 2
+  const count = (results?.[2]?.[1] as number) ?? 0       // zcard result is at index 2
 
   if (count > 10) {                       // max requests per hour
     return res.status(429).json({

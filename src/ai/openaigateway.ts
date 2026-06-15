@@ -12,7 +12,7 @@ const callOpenAI = async (system: string, user: string): Promise<string> => {
     response_format: { type: 'json_object' },
     max_tokens: 2000
   })
-  return response.choices[0].message.content!
+  return response.choices[0]?.message?.content ?? ''
 }
 export const aiBreaker = new CircuitBreaker(callOpenAI, {
   timeout: 30000,

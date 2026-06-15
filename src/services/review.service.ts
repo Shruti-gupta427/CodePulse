@@ -10,7 +10,7 @@ async function createReview (userId: string, code: string, language: string){
              status: 'PENDING'
            }
     })
-      await reviewQueue.add('review', { reviewId: review.id })
+      await reviewQueue.add('review', { reviewId: Review.id })
     
 return Review  
 }

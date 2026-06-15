@@ -11,3 +11,4 @@ logs/
 *.log
 npm-debug.log*
 postgres_data/
+src/app.test.ts
