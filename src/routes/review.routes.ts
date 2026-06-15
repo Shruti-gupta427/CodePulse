@@ -3,6 +3,7 @@ import { z } from 'zod'
 import { validate } from '../middleware/validate'
 import {authenticate} from '../middleware/autenticate'
 import {rateLimiter} from '../middleware/ratelimiter'
+import {reviewService} from '../queues/review.service'
 
 import * as reviewService from '../services/review.service'
 

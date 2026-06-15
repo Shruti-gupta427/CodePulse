@@ -1,4 +1,5 @@
 import { prisma } from '../config/prisma'
+import { reviewQueue } from '../queues/review.queue' 
 async function createReview (userId: string, code: string, language: string){
 
     const Review = await prisma.review.create({
@@ -9,6 +10,7 @@ async function createReview (userId: string, code: string, language: string){
              status: 'PENDING'
            }
     })
+      await reviewQueue.add('review', { reviewId: review.id })
     
 return Review  
 }
