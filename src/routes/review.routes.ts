@@ -1,7 +1,7 @@
 import { Router } from 'express'
 import { z } from 'zod'
 import { validate } from '../middleware/validate'
-import {authenticate} from '../middleware/autenticate'
+import {authenticate} from '../middleware/authenticate'
 import {rateLimiter} from '../middleware/ratelimiter'
 
 import * as reviewService from '../services/review.service'

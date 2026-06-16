@@ -1,8 +1,8 @@
 import { Worker } from 'bullmq'
-import { redis } from '../config/redis'
 import { prisma } from '../config/prisma'
 import { runAIPipeline } from '../ai/pipeline'
 import { env } from '../config/env'
+
 
 export const reviewWorker = new Worker('review-queue', async (job) => {
   const { reviewId } = job.data
