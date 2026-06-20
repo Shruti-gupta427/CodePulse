@@ -1,10 +1,12 @@
-import OpenAI from 'openai'
+import Groq from 'groq-sdk'
 import { env } from '../config/env'
 import CircuitBreaker from 'opossum'
-const client = new OpenAI({ apiKey: env.OPENAI_API_KEY })
-const callOpenAI = async (system: string, user: string): Promise<string> => {
+
+const client = new Groq({ apiKey: env.GROQ_API_KEY })
+
+const callAI = async (system: string, user: string): Promise<string> => {
   const response = await client.chat.completions.create({
-    model: 'gpt-4o',
+    model: 'llama-3.3-70b-versatile',  // free + very capable
     messages: [
       { role: 'system', content: system },
       { role: 'user',   content: user }
@@ -14,11 +16,13 @@ const callOpenAI = async (system: string, user: string): Promise<string> => {
   })
   return response.choices[0]?.message?.content ?? ''
 }
-export const aiBreaker = new CircuitBreaker(callOpenAI, {
+
+export const aiBreaker = new CircuitBreaker(callAI, {
   timeout: 30000,
   errorThresholdPercentage: 50,
   resetTimeout: 30000
 })
-aiBreaker.on('open',     () => console.warn('Circuit OPEN ,OpenAI is down'))
-aiBreaker.on('halfOpen', () => console.warn('Circuit testing OpenAI...'))
-aiBreaker.on('close',    () => console.log('Circuit CLOSED, OpenAI is back'))
+
+aiBreaker.on('open',     () => console.warn('Circuit OPEN — AI is down'))
+aiBreaker.on('halfOpen', () => console.warn('Circuit testing AI...'))
+aiBreaker.on('close',    () => console.log('Circuit CLOSED — AI is back'))

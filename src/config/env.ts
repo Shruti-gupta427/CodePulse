@@ -10,12 +10,12 @@ const envSchema = z.object({
   JWT_REFRESH_SECRET:    z.string().min(8),
   JWT_EXPIRES_IN:        z.string().default('15m'),
   JWT_REFRESH_EXPIRES_IN: z.string().default('7d'),
-  OPENAI_API_KEY:        z.string(),
+  GROQ_API_KEY:        z.string(),
 })
 
 const parsed = envSchema.safeParse(process.env)
 
-if (!parsed.success) {
+if (!parsed.success) {s
   console.error('Invalid environment variables:')
   console.error(parsed.error.flatten().fieldErrors)
   process.exit(1)  
