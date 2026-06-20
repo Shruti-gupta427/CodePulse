@@ -3,7 +3,7 @@
  
 A backend system that reviews your code using AI. You paste code, it tells you what's wrong, how bad it is, and how to fix it — with exact line numbers.
 
- 
+**Live URL:** `https://codepulse-production-0644.up.railway.app`
 ---
  
 ## The idea
