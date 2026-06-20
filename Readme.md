@@ -1,11 +1,9 @@
 
 Readme · MD
-# 🤖 AI Code Review Platform
+# 🤖 CodePulse - AI Code Review Platform
  
 A backend system that reviews your code using AI. You paste code, it tells you what's wrong, how bad it is, and how to fix it — with exact line numbers.
- 
-Built as a portfolio project to demonstrate production backend patterns for MAANG interviews.
- 
+
  
 ---
  
