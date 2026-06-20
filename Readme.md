@@ -266,18 +266,6 @@ Things I plan to add:
 - [ ] GitHub webhook — auto-review code when a PR is opened, post inline comments back
 - [ ] SSE streaming — stream AI review tokens to client in real time as they arrive
 - [ ] Shareable review links — public read-only view via UUID
-**Medium term**
-- [ ] Language-specific prompts — different review rubric for Python vs Go vs Java
-- [ ] Semantic caching — same code = skip AI call, return cached review (saves cost)
-- [ ] Review history analytics — weekly score trends, issue category breakdown charts
-- [ ] VS Code extension — review code directly from the editor
-**Long term**
-- [ ] Multi-model support — route to different AI models based on language or cost
-- [ ] Team accounts — shared review history, aggregate team code quality score
-- [ ] Webhook support for GitLab and Bitbucket
-- [ ] Self-hosted model option using Ollama for privacy-sensitive codebases
----
- 
 ## What I learned building this
  
 - How to decouple HTTP response time from processing time using async queues
